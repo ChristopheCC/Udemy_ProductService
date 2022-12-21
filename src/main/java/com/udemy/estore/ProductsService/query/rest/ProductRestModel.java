@@ -1,11 +1,11 @@
-package com.udemy.estore.ProductService.core.events;
+package com.udemy.estore.ProductsService.query.rest;
 
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
-public class ProductCreatedEvent {
+public class ProductRestModel {
 
     private String productId;
     private String title;

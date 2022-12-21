@@ -1,13 +1,10 @@
-package com.udemy.estore.ProductService.command;
+package com.udemy.estore.ProductsService.command;
 
-import com.udemy.estore.ProductService.core.events.ProductCreatedEvent;
-import lombok.Builder;
-import lombok.Data;
+import com.udemy.estore.ProductsService.core.events.ProductCreatedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
-import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.springframework.beans.BeanUtils;
 

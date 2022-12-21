@@ -1,4 +1,4 @@
-package com.udemy.estore.ProductService.core.data;
+package com.udemy.estore.ProductsService.core.data;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

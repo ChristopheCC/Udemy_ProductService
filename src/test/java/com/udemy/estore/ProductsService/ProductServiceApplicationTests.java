@@ -1,4 +1,4 @@
-package com.udemy.estore.ProductService;
+package com.udemy.estore.ProductsService;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

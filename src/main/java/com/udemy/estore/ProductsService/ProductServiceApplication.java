@@ -1,4 +1,4 @@
-package com.udemy.estore.ProductService;
+package com.udemy.estore.ProductsService;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.udemy.estore.ProductService.command;
+package com.udemy.estore.ProductsService.command;
 
 import lombok.Builder;
 import lombok.Data;
