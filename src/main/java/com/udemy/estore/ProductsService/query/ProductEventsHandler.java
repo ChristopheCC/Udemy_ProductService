@@ -5,6 +5,7 @@ import com.udemy.estore.ProductsService.core.data.ProductsRepository;
 import com.udemy.estore.ProductsService.core.events.ProductCreatedEvent;
 import org.axonframework.config.ProcessingGroup;
 import org.axonframework.eventhandling.EventHandler;
+import org.axonframework.messaging.interceptors.ExceptionHandler;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Component;
 
@@ -18,11 +19,29 @@ public class ProductEventsHandler {
         this.productsRepository = productsRepository;
     }
 
+    @ExceptionHandler(resultType = Exception.class)
+    public void handle(Exception exception) throws Exception {
+        throw exception;
+    }
+
+    @ExceptionHandler(resultType = IllegalArgumentException.class)
+    public void handle(IllegalArgumentException exception){
+        // Log error Message
+    }
+
     @EventHandler
-    public void on(ProductCreatedEvent event){
+    public void on(ProductCreatedEvent event) throws Exception {
         ProductEntity productEntity = new ProductEntity();
         BeanUtils.copyProperties(event, productEntity);
-        productsRepository.save(productEntity);
+        try {
+            productsRepository.save(productEntity);
+        } catch (IllegalArgumentException ex){
+            ex.printStackTrace();
+        }
+        if (true){
+            throw new Exception("An error took place in the Event Handler class");
+        }
+
     }
 
 }

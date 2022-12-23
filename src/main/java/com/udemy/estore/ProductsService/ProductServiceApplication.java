@@ -1,7 +1,10 @@
 package com.udemy.estore.ProductsService;
 
 import com.udemy.estore.ProductsService.command.interceptors.CreateProductCommandInterceptor;
+import com.udemy.estore.ProductsService.core.errorhandling.ProductsServiceEventsErrorHandler;
 import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.config.EventProcessingConfiguration;
+import org.axonframework.config.EventProcessingConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,7 +20,13 @@ public class ProductServiceApplication {
 	}
 
 	@Autowired
-	public void regiserCreateProductCommandInterceptor(ApplicationContext context, CommandBus commandBus){
+	public void registerCreateProductCommandInterceptor(ApplicationContext context, CommandBus commandBus){
 		commandBus.registerDispatchInterceptor(context.getBean(CreateProductCommandInterceptor.class));
+	}
+
+	@Autowired
+	public void configure(EventProcessingConfigurer config) {
+		config.registerListenerInvocationErrorHandler("product-group",
+				conf -> new ProductsServiceEventsErrorHandler());
 	}
 }
