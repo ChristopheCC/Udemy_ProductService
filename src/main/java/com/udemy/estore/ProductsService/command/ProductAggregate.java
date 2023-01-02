@@ -1,7 +1,9 @@
 package com.udemy.estore.ProductsService.command;
 
 import com.udemy.estore.ProductsService.core.events.ProductCreatedEvent;
+import com.udemy.estore.core.commands.CancelProductReservationCommand;
 import com.udemy.estore.core.commands.ReserveProductCommand;
+import com.udemy.estore.core.events.ProductReservationCancelledEvent;
 import com.udemy.estore.core.events.ProductReservedEvent;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventsourcing.EventSourcingHandler;
@@ -71,5 +73,24 @@ public class ProductAggregate {
     @EventSourcingHandler
     public void on(ProductReservedEvent productReservedEvent){
         this.quantity -= productReservedEvent.getQuantity();
+    }
+
+    @CommandHandler
+    public void handle(CancelProductReservationCommand cancelProductReservationCommand){
+        ProductReservationCancelledEvent productReservationCancelledEvent =
+                ProductReservationCancelledEvent.builder()
+                        .orderId(cancelProductReservationCommand.getOrderId())
+                        .productId(cancelProductReservationCommand.getProductId())
+                        .quantity(cancelProductReservationCommand.getQuantity())
+                        .reason(cancelProductReservationCommand.getReason())
+                        .userId(cancelProductReservationCommand.getUserId())
+                        .build();
+
+        AggregateLifecycle.apply(productReservationCancelledEvent);
+    }
+
+    @EventSourcingHandler
+    public void on(ProductReservationCancelledEvent productReservationCancelledEvent){
+        this.quantity += productReservationCancelledEvent.getQuantity();
     }
 }
